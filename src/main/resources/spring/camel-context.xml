@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <camelContext xmlns="http://camel.apache.org/schema/spring" id="camel">
+        <package>org.apache.camel.example.spring</package>
+        <restConfiguration bindingMode="json" component="servlet" />
+        <rest path="/myApi">
+            <get uri="/hello1">
+                <to uri="direct:hello"/>
+            </get>
+            <get uri="/hello2" consumes="application/json">
+                <to uri="direct:bye"/>
+            </get>
+           <!-- <post uri="/hello3">
+                <to uri="mock:update"/>
+            </post>-->
+        </rest>
+        <route>
+            <from uri="direct:hello"/>
+            <transform>
+                <constant>Hello World</constant>
+            </transform>
+        </route>
+        <route>
+            <from uri="direct:bye"/>
+            <transform>
+                <constant>Bye World</constant>
+            </transform>
+        </route>
+    </camelContext>
+    <!--  lets configure the default ActiveMQ broker URL  -->
+    <!--<bean id="jms" class="org.apache.camel.component.jms.JmsComponent">
+        <property name="connectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL" value="vm://localhost?broker.persistent=false&broker.useJmx=true"/>
+            </bean>
+        </property>
+    </bean>-->
+</beans>
