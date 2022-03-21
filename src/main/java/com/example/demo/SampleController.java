@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import com.example.demo.dto.CustomerDetails;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.util.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,11 +38,12 @@ public class SampleController {
     }
 
     @GetMapping("/child4")
-    public CustomerDetails helloWorld4(){
+    public String helloWorld4() throws JsonProcessingException {
         System.out.println("child4 called");
         customerDetails.setCustomerName("test_user_name");
         customerDetails.setLocation("test_location");
-
-        return customerDetails;
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(customerDetails);
+        return jsonInString;
     }
 }
