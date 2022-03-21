@@ -40,8 +40,8 @@ public class SampleController {
     @GetMapping("/child4")
     public String helloWorld4() throws JsonProcessingException {
         System.out.println("child4 called");
-        customerDetails.setCustomerName("test_user_name");
-        customerDetails.setLocation("test_location");
+        customerDetails.setResponseCode("200");
+        customerDetails.setResponseData("{\"customerName\":\"test_user_name\",\"location\":\"test_location\"}");
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = mapper.writeValueAsString(customerDetails);
         return jsonInString;
