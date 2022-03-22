@@ -33,8 +33,11 @@ public class SampleController {
     @GetMapping("/child3")
     public String helloWorld3() throws IOException{
         System.out.println("child3 called");
-//       throw new IllegalArgumentException("Illegal argument exception thrown");
-        throw new IOException("Null argument exception thrown");
+        customerDetails.setResponseCode("503");
+        customerDetails.setResponseData("{\"errorCode\":\"503\",\"errorDesc\":\"customerror\"}");
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonInString = mapper.writeValueAsString(customerDetails);
+        return jsonInString;
     }
 
     @GetMapping("/child4")
